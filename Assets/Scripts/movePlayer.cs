@@ -12,16 +12,23 @@ public class movePlayer : MonoBehaviour
         right arrow: Input.GetAxis("Horizontal") > 0
         up arrow: Input.GetAxis("Vertical") > 0
         down arrow: Input.GetAxis("Vertical") < 0 
-        space bar: Input.GetKeyDown("space") == true
+        space bar: Input.GetKeyDown("space") == true OR Input.inputString == " "
         w: Input.GetKeyDown("w") == true
         a: Input.GetKeyDown("a") == true
         s: Input.GetKeyDown("s") == true
         d: Input.GetKeyDown("d") == true
+
+        Input.inputString: gets key pressed
     */
 
     public float speed = 1.0f;
+    private Rigidbody2D rigidBody ;
+    private float jumpPower = 200.0f;
+    private Vector2 jumpDirection = Vector2.up;
     
-    void Start()    {
+    void Start(){
+        rigidBody = gameObject.GetComponent<Rigidbody2D>();
+        print(rigidBody == null);    
         
     }
 
@@ -30,8 +37,8 @@ public class movePlayer : MonoBehaviour
         var move = new Vector3(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"), 0);
         transform.position += move * speed * Time.deltaTime;
         
-        if(Input.anyKeyDown){ //prints whichever key has been pushed - not good for space/arrows 
-            print(Input.inputString);
+        if(Input.GetKeyDown("space") == true){ //jump
+            rigidBody.AddForce(Vector2.up * jumpPower);
         }
     }
 
