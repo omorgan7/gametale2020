@@ -4,7 +4,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class movePlayer : MonoBehaviour
+public class playerController : MonoBehaviour
 {
 
     /* CONTROLS
