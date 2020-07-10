@@ -37,7 +37,7 @@ public class playerController : MonoBehaviour
         var move = new Vector3(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"), 0);
         transform.position += move * speed * Time.deltaTime;
         
-        if(Input.GetKeyDown("space") == true){ //jump
+        if(Input.GetKeyDown("space") == true){ //jump - still can fly off
             rigidBody.AddForce(Vector2.up * jumpPower);
         }
     }
