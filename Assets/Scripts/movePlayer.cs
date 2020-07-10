@@ -29,6 +29,13 @@ public class movePlayer : MonoBehaviour
     void Update(){         
         var move = new Vector3(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"), 0);
         transform.position += move * speed * Time.deltaTime;
+        
+        if(Input.anyKeyDown){ //prints whichever key has been pushed - not good for space/arrows 
+            print(Input.inputString);
+        }
+    }
 
+    void OnBecameInvisible(){ //tests when out of camera view (i.e lost game, or do we just want if it goes to left?)
+        print("Out of frame...");
     }
 }
