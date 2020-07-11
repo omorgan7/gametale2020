@@ -499,8 +499,8 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!61 &1611606673
-BoxCollider2D:
+--- !u!60 &1611606673
+PolygonCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -522,9 +522,31 @@ BoxCollider2D:
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  serializedVersion: 2
-  m_Size: {x: 0.16, y: 0.16}
-  m_EdgeRadius: 0
+  m_Points:
+    m_Paths:
+    - - {x: 0.036543697, y: 0.07074821}
+      - {x: 0.026993996, y: 0.071196824}
+      - {x: 0.019101849, y: 0.06883692}
+      - {x: 0.017793922, y: 0.07021216}
+      - {x: 0.011741, y: 0.07117016}
+      - {x: -0.00057675445, y: 0.07222651}
+      - {x: -0.005959323, y: 0.071840614}
+      - {x: -0.01594121, y: 0.0699347}
+      - {x: -0.026640037, y: 0.0700505}
+      - {x: -0.033874013, y: 0.070219554}
+      - {x: -0.038756058, y: 0.0668787}
+      - {x: -0.04965812, y: 0.067409396}
+      - {x: -0.060142577, y: 0.059025984}
+      - {x: -0.071173, y: 0.045868628}
+      - {x: -0.071173, y: -0.034491435}
+      - {x: -0.03520956, y: -0.06818866}
+      - {x: 0.02290819, y: -0.069018215}
+      - {x: 0.0647504, y: -0.04695114}
+      - {x: 0.07130202, y: -0.024521189}
+      - {x: 0.071524195, y: -0.020295994}
+      - {x: 0.071444176, y: -0.005723678}
+      - {x: 0.071711555, y: 0.04828933}
+      - {x: 0.055133678, y: 0.06371701}
 --- !u!50 &1611606674
 Rigidbody2D:
   serializedVersion: 4
@@ -830,7 +852,7 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
+  m_Offset: {x: 0.00000010430813, y: 0.0004952848}
   m_SpriteTilingProperty:
     border: {x: 0.049999997, y: 0.049999997, z: 0.049999997, w: 0.049999997}
     pivot: {x: 0.5, y: 0.5}
@@ -841,7 +863,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.16, y: 0.16}
+  m_Size: {x: 0.14065814, y: 0.13919729}
   m_EdgeRadius: 0
 --- !u!50 &1799021613
 Rigidbody2D:
@@ -858,7 +880,7 @@ Rigidbody2D:
   m_Mass: 3
   m_LinearDrag: 0
   m_AngularDrag: 0.05
-  m_GravityScale: 5
+  m_GravityScale: 4
   m_Material: {fileID: 0}
   m_Interpolate: 0
   m_SleepingMode: 1
