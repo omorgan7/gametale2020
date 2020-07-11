@@ -31,7 +31,8 @@ public class playerController : MonoBehaviour{
     public float jumpPower = 10.0f, jumpBoost = 5.0f, fall = 30.0f;
     private int jumps = 0;
     private Vector2 jumpDirection = Vector2.up;
-    private bool inAir = false;
+    private bool inAir = false, moveLeft = false, moveRight = false;
+    private Vector3 move = new Vector3(0,0,0);
     
     public GameObject insideOf;
 
@@ -46,8 +47,8 @@ public class playerController : MonoBehaviour{
     void Update(){    
 
 
-        var move = new Vector3(Input.GetAxis("Horizontal"), 0, 0);
-        transform.position += move * speed * Time.deltaTime;
+        // var move = new Vector3(Input.GetAxis("Horizontal"), 0, 0);
+        // transform.position += move * speed * Time.deltaTime;
         
         if((Input.GetKeyDown(map[0]) == true)&(rigidBody.velocity.y >= -0.001) & (jumps < 2)){ //jump 
             if(jumps == 0){
@@ -63,13 +64,6 @@ public class playerController : MonoBehaviour{
             jumps = 0;
         }
 
-        // if(Input.GetKeyDown("space") == true){ //jump - still can fly off
-        //     rigidBody.AddForce(Vector2.up * jumpPower);
-        // }
-        // print(rigidBody.velocity);
-        // if(Input.GetAxis("Horizontal") != 0){
-        //     print(Input.GetAxis("Horizontal"));
-        // }
 
         checkHit();
 
@@ -77,18 +71,43 @@ public class playerController : MonoBehaviour{
             rigidBody.AddForce(Vector2.down * fall, ForceMode2D.Impulse);
         }
 
-        // if(Input.GetKeyDown(map[1]) == true){
-        //     var move = new Vector3(Input.GetAxis("Horizontal"), 0, 0);
-        //     transform.position += move * speed * Time.deltaTime;
+        if(Input.GetKeyDown(map[1]) == true){
+            moveLeft = true;
+            // var move = new Vector3(Input.GetAxis("Horizontal"), 0, 0);
+            // transform.position += move * speed * Time.deltaTime;
           
-        // }
+        }
+         if(Input.GetKeyUp(map[1]) == true){
+            moveLeft = false;
+            // var move = new Vector3(Input.GetAxis("Horizontal"), 0, 0);
+            // transform.position += move * speed * Time.deltaTime;
+        }
 
-        // if(Input.GetKeyDown(map[3]) == true){
-      
-        //     var move = new Vector3(Input.GetAxis("Horizontal"), 0, 0);
-        //     transform.position += move * speed * Time.deltaTime;
-        // // me; 
-        // }
+        if(moveLeft){
+            if((map[1] == KeyCode.A)  | (map[1] == KeyCode.D)){
+                move = new Vector3(Mathf.Abs(Input.GetAxis("Horizontal")), 0, 0);
+            }
+            else{
+                move = new Vector3(Mathf.Abs(Input.GetAxis("Vertical")), 0, 0);
+            }
+            transform.position -= move * speed * Time.deltaTime;
+        }
+
+        if(Input.GetKeyDown(map[3]) == true){
+            moveRight = true;
+        }
+        if(Input.GetKeyUp(map[3]) == true){
+            moveRight = false;
+        }
+        if(moveRight){
+            if((map[3] == KeyCode.A)  | (map[3] == KeyCode.D)){
+                move = new Vector3(Mathf.Abs(Input.GetAxis("Horizontal")), 0, 0);
+            }
+            else{
+                move = new Vector3(Mathf.Abs(Input.GetAxis("Vertical")), 0, 0);
+            }
+            transform.position += move * speed * Time.deltaTime;
+        }
     }
 
     private void checkHit()
