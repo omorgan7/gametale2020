@@ -8,12 +8,19 @@ public class movingPlatform : MonoBehaviour{
     public float speed = 100.0f;
     private float xChange, yChange, zChange;
     private bool inc = true;
+    public bool st = true; //if true begin platform at start vector
 
 
     
     // Start is called before the first frame update
     void Start(){
-        transform.position = start;
+        if(st){
+            transform.position = start;
+        }
+        else{
+            transform.position = end;
+            inc = false;
+        }
         
     }
 
