@@ -22,6 +22,8 @@ public class playerController : MonoBehaviour{
     
     public GameObject insideOf;
 
+    public Vector3 startingPos; 
+
     void Start(){
         rigidBody = gameObject.GetComponent<Rigidbody2D>();
         print(rigidBody == null);    
@@ -147,6 +149,15 @@ public class playerController : MonoBehaviour{
             {
                 insideOf = null;
             }
+        }
+    }
+
+     void OnCollisionEnter2D(Collision2D collision)
+    {
+        
+        if (collision.gameObject.tag == "transporter") //transport to start
+        {
+            transform.position = startingPos;
         }
     }
 
