@@ -6,7 +6,7 @@ using UnityEngine;
 
 public class playerController : MonoBehaviour{
 
-    private KeyCode [] map = {KeyCode.W, KeyCode.A, KeyCode.S, KeyCode.D}; 
+    private KeyCode [] currentMap = {KeyCode.W, KeyCode.A, KeyCode.S, KeyCode.D}; 
 
     private BoxCollider2D myCollider;
 
@@ -29,10 +29,65 @@ public class playerController : MonoBehaviour{
     }
 
     // Update is called once per frame
-    void Update(){    
+    void Update()
+    {    
+        checkHit();
+        swapKeys();
+        handleMovement();
+    }
 
+    private void swapKeys()
+    {
+        // restore the default.
+        currentMap[0] = KeyCode.W;
+        currentMap[1] = KeyCode.A;
+        currentMap[2] = KeyCode.S;
+        currentMap[3] = KeyCode.D;
         
-        if((Input.GetKeyDown(map[0]) == true)&(rigidBody.velocity.y >= -0.001) & (jumps < 2)){ //jump 
+        if (insideOf == null)
+        {  
+            return;
+        }
+
+        switch (insideOf.tag)
+        {
+            case "red":
+            {
+                // SWAP LR
+                currentMap[1] = KeyCode.D;
+                currentMap[3] = KeyCode.A;
+            } break;
+            case "yellow":
+            {
+                // SWAP LU
+                currentMap[0] = KeyCode.A;
+                currentMap[1] = KeyCode.W;
+            } break;
+            case "green":
+            {
+                // SWAP RU
+                currentMap[0] = KeyCode.D;
+                currentMap[3] = KeyCode.W;
+            } break;
+            case "blue":
+            {
+                // SWAP L->U->R->L
+                currentMap[0] = KeyCode.D;
+                currentMap[1] = KeyCode.W;
+                currentMap[3] = KeyCode.A;
+            } break;
+            case "purple":
+            {
+                // SWAP R->U->L->R
+                currentMap[0] = KeyCode.A;
+                currentMap[1] = KeyCode.D;
+                currentMap[3] = KeyCode.W;
+            } break;
+        }
+    }
+    private void handleMovement()
+    {          
+        if((Input.GetKeyDown(currentMap[0]) == true)&(rigidBody.velocity.y >= -0.001) & (jumps < 2)){ //jump 
             if(jumps == 0){
                 rigidBody.AddForce(Vector2.up * jumpPower, ForceMode2D.Impulse);
             }
@@ -46,23 +101,27 @@ public class playerController : MonoBehaviour{
             jumps = 0;
         }
 
+<<<<<<< HEAD
 
         checkHit();
 
         if((Input.GetKeyDown(map[2]) == true)){ //fall
+=======
+        if((Input.GetKeyDown(currentMap[2]) == true)){
+>>>>>>> master
             rigidBody.AddForce(Vector2.down * fall, ForceMode2D.Impulse);
         }
 
-        if(Input.GetKeyDown(map[1]) == true){
+        if(Input.GetKeyDown(currentMap[1]) == true){
             moveLeft = true;
         }
-         if(Input.GetKeyUp(map[1]) == true){
+         if(Input.GetKeyUp(currentMap[1]) == true){
             moveLeft = false;
         }
 
         //GO LEFT
         if(moveLeft){
-            if((map[1] == KeyCode.A)  | (map[1] == KeyCode.D)){
+            if((currentMap[1] == KeyCode.A)  | (currentMap[1] == KeyCode.D)){
                 move = new Vector3(Mathf.Abs(Input.GetAxis("Horizontal")), 0, 0);
             }
             else{
@@ -71,16 +130,20 @@ public class playerController : MonoBehaviour{
             transform.position -= move * speed * Time.deltaTime;
         }
 
+<<<<<<< HEAD
 
         //GO RIGHT
         if(Input.GetKeyDown(map[3]) == true){
+=======
+        if(Input.GetKeyDown(currentMap[3]) == true){
+>>>>>>> master
             moveRight = true;
         }
-        if(Input.GetKeyUp(map[3]) == true){
+        if(Input.GetKeyUp(currentMap[3]) == true){
             moveRight = false;
         }
         if(moveRight){
-            if((map[3] == KeyCode.A)  | (map[3] == KeyCode.D)){
+            if((currentMap[3] == KeyCode.A)  | (currentMap[3] == KeyCode.D)){
                 move = new Vector3(Mathf.Abs(Input.GetAxis("Horizontal")), 0, 0);
             }
             else{
@@ -88,6 +151,7 @@ public class playerController : MonoBehaviour{
             }
             transform.position += move * speed * Time.deltaTime;
         }
+
     }
 
     private void checkHit()
