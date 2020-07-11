@@ -152,12 +152,14 @@ public class playerController : MonoBehaviour{
         }
     }
 
-     void OnCollisionEnter2D(Collision2D collision)
+    void OnTriggerEnter2D(Collider2D collision)
     {
         
         if (collision.gameObject.tag == "transporter") //transport to start
         {
             transform.position = startingPos;
+            rigidBody.velocity = Vector2.zero;
+            rigidBody.angularVelocity = 0.0f;
         }
     }
 
