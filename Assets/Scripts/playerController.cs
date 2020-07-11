@@ -10,21 +10,6 @@ public class playerController : MonoBehaviour{
 
     private BoxCollider2D myCollider;
 
-    /* CONTROLS
-        left arrow: Input.GetAxis("Horizontal") < 0
-        right arrow: Input.GetAxis("Horizontal") > 0
-        up arrow: Input.GetAxis("Vertical") > 0
-
-        Babove works for wasd
-        down arrow: Input.GetAxis("Vertical") < 0 
-        space bar: Input.GetKeyDown("space") == true OR Input.inputString == " "
-        w: Input.GetKeyDown("w") == true
-        a: Input.GetKeyDown("a") == true
-        s: Input.GetKeyDown("s") == true
-        d: Input.GetKeyDown("d") == true
-
-        Input.inputString: gets key pressed
-    */
 
     public float speed = 1.0f;
     private Rigidbody2D rigidBody ;
@@ -46,9 +31,6 @@ public class playerController : MonoBehaviour{
     // Update is called once per frame
     void Update(){    
 
-
-        // var move = new Vector3(Input.GetAxis("Horizontal"), 0, 0);
-        // transform.position += move * speed * Time.deltaTime;
         
         if((Input.GetKeyDown(map[0]) == true)&(rigidBody.velocity.y >= -0.001) & (jumps < 2)){ //jump 
             if(jumps == 0){
@@ -67,22 +49,18 @@ public class playerController : MonoBehaviour{
 
         checkHit();
 
-        if((Input.GetKeyDown(map[2]) == true)){
+        if((Input.GetKeyDown(map[2]) == true)){ //fall
             rigidBody.AddForce(Vector2.down * fall, ForceMode2D.Impulse);
         }
 
         if(Input.GetKeyDown(map[1]) == true){
             moveLeft = true;
-            // var move = new Vector3(Input.GetAxis("Horizontal"), 0, 0);
-            // transform.position += move * speed * Time.deltaTime;
-          
         }
          if(Input.GetKeyUp(map[1]) == true){
             moveLeft = false;
-            // var move = new Vector3(Input.GetAxis("Horizontal"), 0, 0);
-            // transform.position += move * speed * Time.deltaTime;
         }
 
+        //GO LEFT
         if(moveLeft){
             if((map[1] == KeyCode.A)  | (map[1] == KeyCode.D)){
                 move = new Vector3(Mathf.Abs(Input.GetAxis("Horizontal")), 0, 0);
@@ -93,6 +71,8 @@ public class playerController : MonoBehaviour{
             transform.position -= move * speed * Time.deltaTime;
         }
 
+
+        //GO RIGHT
         if(Input.GetKeyDown(map[3]) == true){
             moveRight = true;
         }
