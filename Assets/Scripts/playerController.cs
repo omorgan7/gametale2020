@@ -112,19 +112,21 @@ public class playerController : MonoBehaviour{
           
         }
 
-        // if(moveLeft){
-        //     rigidBody.AddForce(Vector2.left * speed);
-        // }
-
-
         if(Input.GetKey(currentMap[3]) == true){
             rigidBody.AddForce(Vector2.right * speed);
         }
 
-        if (Mathf.Abs(rigidBody.velocity.x) > maxSpeed)
+        float xVelocity = Mathf.Abs(rigidBody.velocity.x);
+        if (xVelocity > maxSpeed)
         {
             rigidBody.velocity = new Vector2(Mathf.Sign(rigidBody.velocity.x) * maxSpeed, rigidBody.velocity.y);
         }
+
+        if (xVelocity > 0.0f)
+        {
+            rigidBody.AddForce(-20.0f * Mathf.Sign(rigidBody.velocity.x) * Vector2.right);
+        }
+
     }
 
     private void checkHit()
