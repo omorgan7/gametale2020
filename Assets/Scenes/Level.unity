@@ -1801,6 +1801,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1e7680f391cff4e2593947c0cb38e830, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  speed: 1
+  isMoving: 0
 --- !u!81 &1622339597
 AudioListener:
   m_ObjectHideFlags: 0
@@ -2168,6 +2170,7 @@ MonoBehaviour:
   jumpBoost: 20
   fall: 30
   insideOf: {fileID: 0}
+  startingPos: {x: 0, y: 0, z: 0}
 --- !u!50 &1831889358
 Rigidbody2D:
   serializedVersion: 4

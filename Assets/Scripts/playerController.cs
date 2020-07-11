@@ -10,21 +10,6 @@ public class playerController : MonoBehaviour{
 
     private BoxCollider2D myCollider;
 
-    /* CONTROLS
-        left arrow: Input.GetAxis("Horizontal") < 0
-        right arrow: Input.GetAxis("Horizontal") > 0
-        up arrow: Input.GetAxis("Vertical") > 0
-
-        Babove works for wasd
-        down arrow: Input.GetAxis("Vertical") < 0 
-        space bar: Input.GetKeyDown("space") == true OR Input.inputString == " "
-        w: Input.GetKeyDown("w") == true
-        a: Input.GetKeyDown("a") == true
-        s: Input.GetKeyDown("s") == true
-        d: Input.GetKeyDown("d") == true
-
-        Input.inputString: gets key pressed
-    */
 
     public float speed = 30.0f;
     public float maxSpeed = 7.0f;
@@ -36,6 +21,8 @@ public class playerController : MonoBehaviour{
     private Vector3 move = new Vector3(0,0,0);
     
     public GameObject insideOf;
+
+    public Vector3 startingPos; 
 
     void Start(){
         rigidBody = gameObject.GetComponent<Rigidbody2D>();
@@ -111,9 +98,10 @@ public class playerController : MonoBehaviour{
             jumps++;
         }
 
-        if((jumps > 0)&(rigidBody.velocity.y <= 0.001)){ //reset jump
+        if((jumps > 0)&(rigidBody.velocity.y <= 0.001)){ //reset number of jumps
             jumps = 0;
         }
+
 
         if((Input.GetKey(currentMap[2]) == true)){
             rigidBody.AddForce(Vector2.down * fall, ForceMode2D.Impulse);
@@ -124,9 +112,10 @@ public class playerController : MonoBehaviour{
           
         }
 
-        if(moveLeft){
-            rigidBody.AddForce(Vector2.left * speed);
-        }
+        // if(moveLeft){
+        //     rigidBody.AddForce(Vector2.left * speed);
+        // }
+
 
         if(Input.GetKey(currentMap[3]) == true){
             rigidBody.AddForce(Vector2.right * speed);
@@ -160,6 +149,15 @@ public class playerController : MonoBehaviour{
             {
                 insideOf = null;
             }
+        }
+    }
+
+     void OnCollisionEnter2D(Collision2D collision)
+    {
+        
+        if (collision.gameObject.tag == "transporter") //transport to start
+        {
+            transform.position = startingPos;
         }
     }
 
