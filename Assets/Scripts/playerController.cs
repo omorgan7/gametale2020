@@ -11,7 +11,8 @@ public class playerController : MonoBehaviour{
     private BoxCollider2D myCollider;
 
 
-    public float speed = 1.0f;
+    public float speed = 30.0f;
+    public float maxSpeed = 7.0f;
     private Rigidbody2D rigidBody ;
     public float jumpPower = 10.0f, jumpBoost = 5.0f, fall = 30.0f;
     private int jumps = 0;
@@ -43,7 +44,7 @@ public class playerController : MonoBehaviour{
         currentMap[1] = KeyCode.A;
         currentMap[2] = KeyCode.S;
         currentMap[3] = KeyCode.D;
-        
+
         if (insideOf == null)
         {  
             return;
@@ -86,13 +87,11 @@ public class playerController : MonoBehaviour{
         }
     }
     private void handleMovement()
-    {          
-        if((Input.GetKeyDown(currentMap[0]) == true)&(rigidBody.velocity.y >= -0.001) & (jumps < 2)){ //jump 
+    {
+
+        if((Input.GetKey(currentMap[0]) == true)&(rigidBody.velocity.y >= -0.001) & (jumps < 2)){ //jump 
             if(jumps == 0){
                 rigidBody.AddForce(Vector2.up * jumpPower, ForceMode2D.Impulse);
-            }
-            else{
-                rigidBody.AddForce(Vector2.up * jumpBoost, ForceMode2D.Impulse);
             }
             jumps++;
         }
@@ -101,57 +100,29 @@ public class playerController : MonoBehaviour{
             jumps = 0;
         }
 
-<<<<<<< HEAD
 
-        checkHit();
-
-        if((Input.GetKeyDown(map[2]) == true)){ //fall
-=======
-        if((Input.GetKeyDown(currentMap[2]) == true)){
->>>>>>> master
+        if((Input.GetKey(currentMap[2]) == true)){
             rigidBody.AddForce(Vector2.down * fall, ForceMode2D.Impulse);
         }
 
-        if(Input.GetKeyDown(currentMap[1]) == true){
-            moveLeft = true;
-        }
-         if(Input.GetKeyUp(currentMap[1]) == true){
-            moveLeft = false;
+        if(Input.GetKey(currentMap[1]) == true){
+            rigidBody.AddForce(Vector2.left * speed);
+          
         }
 
-        //GO LEFT
         if(moveLeft){
-            if((currentMap[1] == KeyCode.A)  | (currentMap[1] == KeyCode.D)){
-                move = new Vector3(Mathf.Abs(Input.GetAxis("Horizontal")), 0, 0);
-            }
-            else{
-                move = new Vector3(Mathf.Abs(Input.GetAxis("Vertical")), 0, 0);
-            }
-            transform.position -= move * speed * Time.deltaTime;
+            rigidBody.AddForce(Vector2.left * speed);
         }
 
-<<<<<<< HEAD
 
-        //GO RIGHT
-        if(Input.GetKeyDown(map[3]) == true){
-=======
-        if(Input.GetKeyDown(currentMap[3]) == true){
->>>>>>> master
-            moveRight = true;
-        }
-        if(Input.GetKeyUp(currentMap[3]) == true){
-            moveRight = false;
-        }
-        if(moveRight){
-            if((currentMap[3] == KeyCode.A)  | (currentMap[3] == KeyCode.D)){
-                move = new Vector3(Mathf.Abs(Input.GetAxis("Horizontal")), 0, 0);
-            }
-            else{
-                move = new Vector3(Mathf.Abs(Input.GetAxis("Vertical")), 0, 0);
-            }
-            transform.position += move * speed * Time.deltaTime;
+        if(Input.GetKey(currentMap[3]) == true){
+            rigidBody.AddForce(Vector2.right * speed);
         }
 
+        if (Mathf.Abs(rigidBody.velocity.x) > maxSpeed)
+        {
+            rigidBody.velocity = new Vector2(Mathf.Sign(rigidBody.velocity.x) * maxSpeed, rigidBody.velocity.y);
+        }
     }
 
     private void checkHit()
@@ -159,20 +130,32 @@ public class playerController : MonoBehaviour{
 
         int layerMask = 1 << 8;
 
-        RaycastHit2D hit = Physics2D.Raycast(transform.position, Vector3.right, 0.1f, layerMask);
+        RaycastHit2D hit = Physics2D.Raycast(transform.position, Vector3.right, 0.01f, layerMask);
         if (hit)
         {
+            if (insideOf == null)
+            {
+                rigidBody.AddForce(new Vector2 (Mathf.Sign(rigidBody.velocity.x) * 100.0f, 0), ForceMode2D.Impulse);
+            }
             insideOf = hit.collider.gameObject;
         }
         else
         {
-            hit = Physics2D.Raycast(transform.position, Vector3.left, 0.1f, layerMask);
+            hit = Physics2D.Raycast(transform.position, Vector3.left, 0.01f, layerMask);
             if (hit)
             {
+                if (insideOf == null)
+                {
+                    rigidBody.AddForce(new Vector2 (Mathf.Sign(rigidBody.velocity.x) * 100.0f, 0), ForceMode2D.Impulse);
+                }
                 insideOf = hit.collider.gameObject;
             }
             else
             {
+                if (insideOf != null)
+                {
+                    rigidBody.AddForce(new Vector2 (Mathf.Sign(rigidBody.velocity.x) * 100.0f, 0), ForceMode2D.Impulse);
+                }
                 insideOf = null;
             }
         }
