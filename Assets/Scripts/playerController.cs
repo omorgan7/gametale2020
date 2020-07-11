@@ -4,13 +4,16 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class playerController : MonoBehaviour
-{
+public class playerController : MonoBehaviour{
+
+    private char [] map = {'w', 'a', 's', 'd', ' '}; //
 
     /* CONTROLS
         left arrow: Input.GetAxis("Horizontal") < 0
         right arrow: Input.GetAxis("Horizontal") > 0
         up arrow: Input.GetAxis("Vertical") > 0
+
+        Babove works for wasd
         down arrow: Input.GetAxis("Vertical") < 0 
         space bar: Input.GetKeyDown("space") == true OR Input.inputString == " "
         w: Input.GetKeyDown("w") == true
@@ -33,13 +36,21 @@ public class playerController : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update(){         
+    void Update(){    
+
+
+
+
         var move = new Vector3(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"), 0);
         transform.position += move * speed * Time.deltaTime;
         
-        if(Input.GetKeyDown("space") == true){ //jump - still can fly off
-            rigidBody.AddForce(Vector2.up * jumpPower);
-        }
+        // if(Input.GetKeyDown("space") == true){ //jump - still can fly off
+        //     rigidBody.AddForce(Vector2.up * jumpPower);
+        // }
+
+        // if(Input.GetAxis("Horizontal") != 0){
+        //     print(Input.GetAxis("Horizontal"));
+        // }
     }
 
     void OnBecameInvisible(){ //tests when out of camera view (i.e lost game, or do we just want if it goes to left?)
