@@ -12,11 +12,14 @@ public class DebugPlayerController : MonoBehaviour
     }
     void Update()
     {
-        mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        transform.position = new Vector3(
-            mousePosition.x,
-            mousePosition.y,
-            transform.position.z
-        );
+        if (Input.GetMouseButtonDown(0))
+        {
+            mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+            transform.position = new Vector3(
+                mousePosition.x,
+                mousePosition.y,
+                transform.position.z
+            );
+        }
     }
 }
