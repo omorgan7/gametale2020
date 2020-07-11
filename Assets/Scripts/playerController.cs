@@ -113,19 +113,21 @@ public class playerController : MonoBehaviour{
           
         }
 
-        // if(moveLeft){
-        //     rigidBody.AddForce(Vector2.left * speed);
-        // }
-
-
         if(Input.GetKey(currentMap[3]) == true){
             rigidBody.AddForce(Vector2.right * speed);
         }
 
-        if (Mathf.Abs(rigidBody.velocity.x) > maxSpeed)
+        float xVelocity = Mathf.Abs(rigidBody.velocity.x);
+        if (xVelocity > maxSpeed)
         {
             rigidBody.velocity = new Vector2(Mathf.Sign(rigidBody.velocity.x) * maxSpeed, rigidBody.velocity.y);
         }
+
+        if (xVelocity > 0.0f)
+        {
+            rigidBody.AddForce(-20.0f * Mathf.Sign(rigidBody.velocity.x) * Vector2.right);
+        }
+
     }
 
     private void checkHit()
@@ -153,12 +155,19 @@ public class playerController : MonoBehaviour{
         }
     }
 
-     void OnCollisionEnter2D(Collision2D collision)
+    void OnTriggerEnter2D(Collider2D collision)
     {
         
         if (collision.gameObject.tag == "transporter") //transport to start
         {
             transform.position = startingPos;
+            rigidBody.velocity = Vector2.zero;
+            rigidBody.angularVelocity = 0.0f;
+        }
+
+        if (collision.gameObject.tag == "checkpoint")
+        {
+            startingPos = transform.position;
         }
     }
 
