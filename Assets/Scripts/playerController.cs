@@ -33,6 +33,8 @@ public class playerController : MonoBehaviour{
     private Vector2 jumpDirection = Vector2.up;
     private bool inAir = false;
     
+    public GameObject insideOf;
+
     void Start(){
         rigidBody = gameObject.GetComponent<Rigidbody2D>();
         print(rigidBody == null);    
@@ -62,9 +64,40 @@ public class playerController : MonoBehaviour{
             jumps = 0;
         }
 
+        // if(Input.GetKeyDown("space") == true){ //jump - still can fly off
+        //     rigidBody.AddForce(Vector2.up * jumpPower);
+        // }
         // print(rigidBody.velocity);
+        // if(Input.GetAxis("Horizontal") != 0){
+        //     print(Input.GetAxis("Horizontal"));
+        // }
+
+        checkHit();
 
     }
 
+    private void checkHit()
+    {
+
+        int layerMask = 1 << 8;
+
+        RaycastHit2D hit = Physics2D.Raycast(transform.position, Vector3.right, 0.1f, layerMask);
+        if (hit)
+        {
+            insideOf = hit.collider.gameObject;
+        }
+        else
+        {
+            hit = Physics2D.Raycast(transform.position, Vector3.left, 0.1f, layerMask);
+            if (hit)
+            {
+                insideOf = hit.collider.gameObject;
+            }
+            else
+            {
+                insideOf = null;
+            }
+        }
+    }
 
 }
