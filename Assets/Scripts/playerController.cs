@@ -96,7 +96,7 @@ public class playerController : MonoBehaviour{
             jumps++;
         }
 
-        if((jumps > 0)&(rigidBody.velocity.y <= 0.001)){ //reset jump
+        if((jumps > 0)&(rigidBody.velocity.y <= 0.001)){ //reset number of jumps
             jumps = 0;
         }
 
@@ -110,9 +110,9 @@ public class playerController : MonoBehaviour{
           
         }
 
-        if(moveLeft){
-            rigidBody.AddForce(Vector2.left * speed);
-        }
+        // if(moveLeft){
+        //     rigidBody.AddForce(Vector2.left * speed);
+        // }
 
 
         if(Input.GetKey(currentMap[3]) == true){
