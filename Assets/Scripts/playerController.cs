@@ -6,7 +6,9 @@ using UnityEngine;
 
 public class playerController : MonoBehaviour{
 
-    private char [] map = {'w', 'a', 's', 'd', ' '}; //
+    private char [] map = {'w', 'a', 's', 'd', ' '}; //#
+
+    private BoxCollider2D myCollider;
 
     /* CONTROLS
         left arrow: Input.GetAxis("Horizontal") < 0
@@ -26,34 +28,43 @@ public class playerController : MonoBehaviour{
 
     public float speed = 1.0f;
     private Rigidbody2D rigidBody ;
-    private float jumpPower = 200.0f;
+    public float jumpPower = 10.0f, jumpBoost = 5.0f;
+    private int jumps = 0;
     private Vector2 jumpDirection = Vector2.up;
+    private bool inAir = false;
     
     void Start(){
         rigidBody = gameObject.GetComponent<Rigidbody2D>();
         print(rigidBody == null);    
+        myCollider = gameObject.GetComponent<BoxCollider2D>();
         
     }
 
     // Update is called once per frame
     void Update(){    
 
-
-
+        print(jumps);
 
         var move = new Vector3(Input.GetAxis("Horizontal"), 0, 0);
         transform.position += move * speed * Time.deltaTime;
         
-        // if(Input.GetKeyDown("space") == true){ //jump - still can fly off
-        //     rigidBody.AddForce(Vector2.up * jumpPower);
-        // }
+        if((Input.GetKeyDown("w") == true)&(rigidBody.velocity.y >= -0.001) & (jumps < 2)){ //jump 
+            if(jumps == 0){
+                rigidBody.AddForce(Vector2.up * jumpPower, ForceMode2D.Impulse);
+            }
+            else{
+                rigidBody.AddForce(Vector2.up * jumpBoost, ForceMode2D.Impulse);
+            }
+            jumps++;
+        }
 
-        // if(Input.GetAxis("Horizontal") != 0){
-        //     print(Input.GetAxis("Horizontal"));
-        // }
+        if((jumps > 0)&(rigidBody.velocity.y <= 0.001)){ //reset jump
+            jumps = 0;
+        }
+
+        // print(rigidBody.velocity);
+
     }
 
-    void OnBecameInvisible(){ //tests when out of camera view (i.e lost game, or do we just want if it goes to left?)
-        print("Out of frame...");
-    }
+
 }
