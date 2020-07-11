@@ -164,6 +164,11 @@ public class playerController : MonoBehaviour{
             rigidBody.velocity = Vector2.zero;
             rigidBody.angularVelocity = 0.0f;
         }
+
+        if (collision.gameObject.tag == "checkpoint")
+        {
+            startingPos = transform.position;
+        }
     }
 
 }
