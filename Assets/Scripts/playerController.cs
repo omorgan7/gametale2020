@@ -130,32 +130,21 @@ public class playerController : MonoBehaviour{
 
         int layerMask = 1 << 8;
 
-        RaycastHit2D hit = Physics2D.Raycast(transform.position, Vector3.right, 0.01f, layerMask);
+        RaycastHit2D hit = Physics2D.Raycast(transform.position, Vector3.right, 0.5f, layerMask);
         if (hit)
         {
-            if (insideOf == null)
-            {
-                rigidBody.AddForce(new Vector2 (Mathf.Sign(rigidBody.velocity.x) * 100.0f, 0), ForceMode2D.Impulse);
-            }
             insideOf = hit.collider.gameObject;
         }
         else
         {
-            hit = Physics2D.Raycast(transform.position, Vector3.left, 0.01f, layerMask);
+            hit = Physics2D.Raycast(transform.position, Vector3.left, 0.5f, layerMask);
             if (hit)
             {
-                if (insideOf == null)
-                {
-                    rigidBody.AddForce(new Vector2 (Mathf.Sign(rigidBody.velocity.x) * 100.0f, 0), ForceMode2D.Impulse);
-                }
+
                 insideOf = hit.collider.gameObject;
             }
             else
             {
-                if (insideOf != null)
-                {
-                    rigidBody.AddForce(new Vector2 (Mathf.Sign(rigidBody.velocity.x) * 100.0f, 0), ForceMode2D.Impulse);
-                }
                 insideOf = null;
             }
         }
