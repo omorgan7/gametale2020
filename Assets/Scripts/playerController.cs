@@ -28,6 +28,7 @@ public class playerController : MonoBehaviour{
         rigidBody = gameObject.GetComponent<Rigidbody2D>();
         print(rigidBody == null);    
         myCollider = gameObject.GetComponent<BoxCollider2D>();
+        startingPos = transform.position;
         
     }
 
