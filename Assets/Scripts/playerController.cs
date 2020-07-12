@@ -212,8 +212,7 @@ public class playerController : MonoBehaviour{
     }
 
     void checkQuit(){
-         if (Input.GetKey("escape"))
-        {
+        if (Input.GetKey("escape")){
             Application.Quit();
         }
     }
