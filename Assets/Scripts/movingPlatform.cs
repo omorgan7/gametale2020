@@ -6,49 +6,37 @@ public class movingPlatform : MonoBehaviour{
 
     public Vector3 start = new Vector3(-7, -0.03f, -0.8f), end = new Vector3(-4, -0.03f, -0.08f);
     public float speed = 100.0f;
-    private float xChange, yChange, zChange;
+    private Vector3 diff;
     private bool inc = true;
-    public bool st = true; //if true begin platform at start vector
+    public bool beginAtStartPosition = true; //if true begin platform at start vector
 
 
     
     // Start is called before the first frame update
     void Start(){
-        if(st){
+        if(beginAtStartPosition){
             transform.position = start;
         }
         else{
             transform.position = end;
-            inc = false;
         }
-        
+        diff = end - start;
     }
 
     // Update is called once per frame
     void Update()
     {
-        calculateOffsets();
-        movePlatform();
-    }
+        float x = start.x;
+        float y = start.y;
+        if (diff.x != 0.0f)
+        {
+            x += Mathf.Sign(diff.x) * Mathf.PingPong(speed * Time.time, Mathf.Abs(diff.x));
+        }
+        if (diff.y != 0.0f)
+        {
+            y += Mathf.Sign(diff.y) * Mathf.PingPong(speed * Time.time, Mathf.Abs(diff.y));
+        }
 
-    void movePlatform(){
-        if((transform.position.x <= end.x)&(transform.position.y <= end.y)&(transform.position.z <= end.z)&(inc)){
-            transform.position += new Vector3(xChange, yChange, zChange);
-        }
-        else if(((transform.position.x >= end.x)|(transform.position.y >= end.y)|(transform.position.z >= end.z))&(inc)){
-            inc = false;
-        }
-        else if((transform.position.x >= start.x)&(transform.position.y >= start.y)&(transform.position.z >= start.z)&(!inc)){
-            transform.position -= new Vector3(xChange, yChange, zChange);
-        }
-        else if(((transform.position.x <= start.x)|(transform.position.y <= start.y)|(transform.position.z <= start.z))&(!inc)){
-            inc = true;
-        }    
-    }
-
-    void calculateOffsets(){
-        xChange = (end.x - start.x)/speed;
-        yChange = (end.y - start.y)/speed;
-        zChange = (end.z - start.z)/speed;
+        transform.position = new Vector3(x, y, transform.position.z);
     }
 }
