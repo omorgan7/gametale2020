@@ -7,6 +7,7 @@ using UnityEngine;
 public class playerController : MonoBehaviour{
 
     private KeyCode [] currentMap = {KeyCode.W, KeyCode.A, KeyCode.S, KeyCode.D}; 
+    private KeyCode [] currentArrowMap  =  {KeyCode.UpArrow, KeyCode.LeftArrow, KeyCode.DownArrow, KeyCode.RightArrow};
 
     private BoxCollider2D myCollider;
 
@@ -48,6 +49,11 @@ public class playerController : MonoBehaviour{
         currentMap[2] = KeyCode.S;
         currentMap[3] = KeyCode.D;
 
+        currentArrowMap[0] = KeyCode.UpArrow;
+        currentArrowMap[1] = KeyCode.LeftArrow;
+        currentArrowMap[2] = KeyCode.DownArrow;
+        currentArrowMap[3] = KeyCode.RightArrow;
+
         if (insideOf == null)
         {  
             return;
@@ -60,18 +66,30 @@ public class playerController : MonoBehaviour{
                 // SWAP LR
                 currentMap[1] = KeyCode.D;
                 currentMap[3] = KeyCode.A;
+
+                currentArrowMap[1] = KeyCode.RightArrow;
+                currentArrowMap[3] = KeyCode.LeftArrow;
+
             } break;
             case "yellow":
             {
                 // SWAP LU
                 currentMap[0] = KeyCode.A;
                 currentMap[1] = KeyCode.W;
+
+                currentArrowMap[0] = KeyCode.LeftArrow;
+                currentArrowMap[1] = KeyCode.UpArrow;
+
             } break;
             case "green":
             {
                 // SWAP RU
                 currentMap[0] = KeyCode.D;
                 currentMap[3] = KeyCode.W;
+
+                currentArrowMap[0] = KeyCode.RightArrow;
+                currentArrowMap[3] = KeyCode.UpArrow;
+
             } break;
             case "blue":
             {
@@ -79,6 +97,12 @@ public class playerController : MonoBehaviour{
                 currentMap[0] = KeyCode.D;
                 currentMap[1] = KeyCode.W;
                 currentMap[3] = KeyCode.A;
+
+                currentArrowMap[0] = KeyCode.RightArrow;
+                currentArrowMap[1] = KeyCode.UpArrow;
+                currentArrowMap[3] = KeyCode.LeftArrow;
+
+
             } break;
             case "purple":
             {
@@ -86,13 +110,18 @@ public class playerController : MonoBehaviour{
                 currentMap[0] = KeyCode.A;
                 currentMap[1] = KeyCode.D;
                 currentMap[3] = KeyCode.W;
+
+                currentArrowMap[0] = KeyCode.LeftArrow;
+                currentArrowMap[1] = KeyCode.RightArrow;
+                currentArrowMap[3] = KeyCode.UpArrow;
+
             } break;
         }
     }
     private void handleMovement()
     {
 
-        if((Input.GetKey(currentMap[0]) == true)&(rigidBody.velocity.y >= -0.001) & (jumps < 2)){ //jump 
+        if(((Input.GetKey(currentMap[0]) == true)|(Input.GetKey(currentArrowMap[0]) == true))&(rigidBody.velocity.y >= -0.001) & (jumps < 2)){ //jump 
             if(jumps == 0){
                 rigidBody.AddForce(Vector2.up * jumpPower, ForceMode2D.Impulse);
             }
@@ -104,16 +133,16 @@ public class playerController : MonoBehaviour{
         }
 
 
-        if((Input.GetKey(currentMap[2]) == true)){
+        if((Input.GetKey(currentMap[2]) == true)|((Input.GetKey(currentArrowMap[2]) == true))){
             rigidBody.AddForce(Vector2.down * fall, ForceMode2D.Impulse);
         }
 
-        if(Input.GetKey(currentMap[1]) == true){
+        if((Input.GetKey(currentMap[1]) == true)|(Input.GetKey(currentArrowMap[1]) == true)){
             rigidBody.AddForce(Vector2.left * speed);
           
         }
 
-        if(Input.GetKey(currentMap[3]) == true){
+        if((Input.GetKey(currentMap[3]) == true)|(Input.GetKey(currentArrowMap[3]) == true)){
             rigidBody.AddForce(Vector2.right * speed);
         }
 
