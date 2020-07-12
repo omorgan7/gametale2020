@@ -39,6 +39,7 @@ public class playerController : MonoBehaviour{
         checkHit();
         swapKeys();
         handleMovement();
+        checkQuit();
     }
 
     private void swapKeys()
@@ -197,6 +198,13 @@ public class playerController : MonoBehaviour{
         if (collision.gameObject.tag == "checkpoint")
         {
             startingPos = transform.position;
+        }
+    }
+
+    void checkQuit(){
+         if (Input.GetKey("escape"))
+        {
+            Application.Quit();
         }
     }
 
