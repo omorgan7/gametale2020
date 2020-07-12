@@ -27,13 +27,13 @@ public class playerController : MonoBehaviour{
 
     public Vector3 spawnPos;
 
+    private float timer = 0.0f;
+
     void Start(){
-        rigidBody = gameObject.GetComponent<Rigidbody2D>();
-        print(rigidBody == null);    
+        rigidBody = gameObject.GetComponent<Rigidbody2D>(); 
         myCollider = gameObject.GetComponent<BoxCollider2D>();
         startingPos = transform.position;
-        spawnPos = startingPos;
-        
+        spawnPos = startingPos;        
     }
 
     // Update is called once per frame
@@ -213,8 +213,16 @@ public class playerController : MonoBehaviour{
 
     void checkQuit(){
         if (Input.GetKey("escape")){
+            timer+=Time.deltaTime;
+            // Application.Quit();
+        }
+        if((Input.GetKeyUp("escape"))){
+            timer = 0.0f;
+        }
+        if(timer > 0.5f){
             Application.Quit();
         }
+        // print(timer);
     }
 
 }
