@@ -20,7 +20,7 @@ public class CameraController : MonoBehaviour
             transform.position += move * speed * Time.deltaTime;
         }
         else{
-            transform.position = new Vector3(player.transform.position.x, player.transform.position.y, transform.position.z);
+            transform.position = new Vector3(player.transform.position.x, player.transform.position.y - 10.0f, transform.position.z);
         }
     }
 }
