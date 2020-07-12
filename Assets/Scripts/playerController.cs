@@ -23,13 +23,16 @@ public class playerController : MonoBehaviour{
     
     public GameObject insideOf;
 
-    public Vector3 startingPos; 
+    public Vector3 startingPos;
+
+    public Vector3 spawnPos;
 
     void Start(){
         rigidBody = gameObject.GetComponent<Rigidbody2D>();
         print(rigidBody == null);    
         myCollider = gameObject.GetComponent<BoxCollider2D>();
         startingPos = transform.position;
+        spawnPos = startingPos;
         
     }
 
@@ -198,6 +201,13 @@ public class playerController : MonoBehaviour{
         if (collision.gameObject.tag == "checkpoint")
         {
             startingPos = transform.position;
+        }
+
+        if (collision.gameObject.tag == "gotostart")
+        {
+            transform.position = spawnPos;
+            rigidBody.velocity = new Vector2(0.0f, rigidBody.velocity.y);
+            rigidBody.angularVelocity = 0.0f;
         }
     }
 
