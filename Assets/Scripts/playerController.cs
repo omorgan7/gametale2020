@@ -42,6 +42,7 @@ public class playerController : MonoBehaviour{
         checkHit();
         swapKeys();
         handleMovement();
+        checkQuit();
     }
 
     private void swapKeys()
@@ -207,6 +208,12 @@ public class playerController : MonoBehaviour{
             transform.position = spawnPos;
             rigidBody.velocity = new Vector2(0.0f, rigidBody.velocity.y);
             rigidBody.angularVelocity = 0.0f;
+        }
+    }
+
+    void checkQuit(){
+        if (Input.GetKey("escape")){
+            Application.Quit();
         }
     }
 
